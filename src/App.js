@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 // import { AiOutlineHeart } from 'react-icons/ai';
 // import { AiFillHeart } from 'react-icons/ai';
@@ -35,15 +36,32 @@ function Logo (){
 }
 
 function Form (){
+  
+  const [description, setDescription] = useState("");
+  const [quantity, setQrantity] = useState(1)
+
+  function handleSubmit(e){
+    e.preventDefault(); 
+
+if(!description) return;
+
+   const newItem = {description, quantity, packed:false ,id: Date.now()};
+   console.log(newItem)
+
+   setDescription("");
+   setQrantity(1);
+
+  }
+
   return(
-  <form className='bg-green-900 w-full h-20 gap-4 flex items-center justify-center'>
+  <form onSubmit={handleSubmit} className='bg-green-900 w-full h-20 gap-4 flex items-center justify-center'>
     <h1 className='text-white text-[20px]' >What do you need for your 😍 trip? </h1>
-    <select className='rounded-xl p-3 px-2 '>
-      <option value={1} >1</option>
-      <option value={2} >2</option>
-      <option value={3} >3</option>
+    <select className='rounded-xl p-3 px-2' value={quantity} onChange={(e) => setQrantity(Number(e.target.value) )} >
+      {Array.from({length: 20}, (_, i) => i + 1).map((num) =>(
+        <option value={num} key={num} >{num}</option>
+      ) ) }
     </select>
-    <input className='rounded-xl p-3' type='text' placeholder='Item...' />
+    <input className='rounded-xl p-3' type='text' placeholder='Item...' value={description} onChange={(e) => setDescription(e.target.value) }  />
     <button className='border-spacing-6 border rounded-xl p-3 text-white bg-green-500 '>add</button>
   </form>
 
@@ -53,11 +71,11 @@ function Form (){
 
 function PakingList (){ 
   return(
-  <div className='bg-yellow-400 w-full h-[535px]  px-20   flex '>
+  <div className='bg-orange-400 w-full h-[535px]  px-28    flex '>
     <div className='flex w-auto items-center  h-36'>
-    <ul className='text-[30px] flex flex-row justify-center gap-16' >
+    <ul className='text-[30px] flex flex-row justify-center gap-24' >
    {initialItems.map((item =>(
-   <Item  item={item} />)
+   <Item  item={item} key={item.id} />)
    ))}
     </ul>
   </div>
