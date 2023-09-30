@@ -19,6 +19,11 @@ export default function App() {
   const [items, setItems] = useState([]);
   function handleAddItems(item){ 
     setItems((items)=> [...items, item] )
+
+    function handleDeleteItem(id){
+      console.log(id);
+    }
+
   }
 
   return (
