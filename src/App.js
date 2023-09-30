@@ -99,11 +99,12 @@ function Item({ item, onDeleteItem, onToggleItems }) {
 
 function Stats({items}) {
 const numItems = items.length;
+const numPaked = items.filter((item) => item.packed).length;
 
   return (
     <footer className='bg-green-300 w-full flex items-center justify-center '>
       <em>
-        <h1 className='text-red-700 text-[20px]' >💼 You have {numItems} items on your list, and you already picked X (X%)</h1>
+        <h1 className='text-red-700 text-[20px]' >💼 You have {numItems} items on your list, and you already picked {numPaked} (X%)</h1>
       </em>
     </footer>
   )
