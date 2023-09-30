@@ -16,11 +16,16 @@ const initialItems = [
 ]
 
 export default function App() {
+  const [items, setItems] = useState([]);
+  function handleAddItems(item){ 
+    setItems((items)=> [...items, item] )
+  }
+
   return (
     <div className='flex items-center justify-center flex-col '>
      <Logo/>
-     <Form/>
-     <PakingList/>
+     <Form onAddItems={handleAddItems} />
+     <PakingList items={items} />
      <Stats/>
     </div>
   )
@@ -35,15 +40,12 @@ function Logo (){
   )
 }
 
-function Form (){
+function Form ({onAddItems}){
   
   const [description, setDescription] = useState("");
   const [quantity, setQrantity] = useState(1);
-  const [items, setItems = useState([]);
 
-  function handleAddItems(item){
-    setItems((items)=> [...items, item] )
-  }
+  
 
   function handleSubmit(e){
     e.preventDefault(); 
@@ -53,7 +55,7 @@ if(!description) return;
    const newItem = {description, quantity, packed:false ,id: Date.now()};
    console.log(newItem)
  
-   handleAddItems(newItem);
+   onAddItems(newItem);
 
    setDescription("");
    setQrantity(1);
@@ -76,12 +78,12 @@ if(!description) return;
 }
 
 
-function PakingList (){ 
+function PakingList ({items}){ 
   return(
-  <div className='bg-orange-400 w-full h-[535px]  px-28    flex '>
-    <div className='flex w-auto items-center  h-36'>
-    <ul className='text-[30px] flex flex-row justify-center gap-24' >
-   {initialItems.map((item =>(
+  <div className='bg-orange-400 w-full h-[500px] justify-center items-start  px- 8  flex '>
+    <div className='flex w-full bg-slate-400 '>
+    <ul className='text-[30px] flex-row gap-10 flex  flex-wrap items-center' >
+   {items.map((item =>(
    <Item  item={item} key={item.id} />)
    ))}
     </ul>
