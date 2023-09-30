@@ -8,7 +8,7 @@ const initialItems = [
 ]
 
 export default function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(initialItems);
 
   function handleAddItems(item) {
     setItems((items) => [...items, item]);
@@ -69,7 +69,7 @@ function Form({ onAddItems }) {
 function PackingList({ items, onDeleteItem }) {
   return (
     <div className='bg-orange-400 w-full h-[500px] justify-center items-start  px- 8  flex '>
-      <div className='flex w-full bg-slate-400 '>
+      <div className='flex w-full  '>
         <ul className='text-[30px] flex-row gap-10 flex  flex-wrap items-center' >
           {items.map((item) => (
             <Item item={item} key={item.id} onDeleteItem={onDeleteItem} />
@@ -103,6 +103,6 @@ function Stats() {
 
 
 
-// onClick={()=> onDeleteItem(item.id)}
+// 
 // onDeleteItem = {onDeleteItem} 
 // onDeleteItem={handleDeleteItem}
