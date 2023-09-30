@@ -73,7 +73,7 @@ function Form({ onAddItems }) {
 
 function PackingList({ items, onDeleteItem, onToggleItems }) {
   return (
-    <div className='bg-orange-400 w-full h-[480px] justify-center items-start  px- 8  flex '>
+    <div className='bg-orange-400 w-full gap-60 h-[480px] justify-start items-center flex-col   px-8  flex '>
       <div className='flex w-full  '>
         <ul className='text-[30px] flex-row gap-10 flex  flex-wrap items-center' >
           {items.map((item) => (
@@ -81,6 +81,13 @@ function PackingList({ items, onDeleteItem, onToggleItems }) {
           ))}
         </ul>
       </div>
+        <div>
+          <select>
+          <option value="input">Sorry by input order </option>
+          <option value="input">Sorry by description</option>
+          <option value="input">Sorry by packed status</option>
+          </select>
+        </div>
     </div>
   )
 }
