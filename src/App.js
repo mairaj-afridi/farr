@@ -3,8 +3,8 @@ import './App.css';
 
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: true },
-  { id: 2, description: "Sock", quantity: 12, packed: false },
-  { id: 3, description: "Charger", quantity: 1, packed: false },
+  { id: 2, description: "Sock", quantity: 12, packed: true },
+  { id: 3, description: "Charger", quantity: 1, packed: true },
 ]
 
 export default function App() {
@@ -18,11 +18,16 @@ export default function App() {
     setItems((items) => items.filter((item) => item.id !== id));
   }
 
+  function handleToggleItem(id){
+    setItems(items => items.map(item => item.id === id ? { ...item, packed: ! item.packed} : item ) )
+  }
+
+
   return (
     <div className='flex items-center justify-center flex-col '>
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} onDeleteItem={handleDeleteItem} />
+      <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItems={handleToggleItem } />
       <Stats />
     </div>
   );
@@ -66,13 +71,13 @@ function Form({ onAddItems }) {
   )
 }
 
-function PackingList({ items, onDeleteItem }) {
+function PackingList({ items, onDeleteItem,onToggleItems }) {
   return (
     <div className='bg-orange-400 w-full h-[500px] justify-center items-start  px- 8  flex '>
       <div className='flex w-full  '>
         <ul className='text-[30px] flex-row gap-10 flex  flex-wrap items-center' >
           {items.map((item) => (
-            <Item item={item} key={item.id} onDeleteItem={onDeleteItem} />
+            <Item item={item} key={item.id} onDeleteItem={onDeleteItem} onToggleItems={onToggleItems} />
           ))}
         </ul>
       </div>
@@ -80,9 +85,10 @@ function PackingList({ items, onDeleteItem }) {
   )
 }
 
-function Item({ item, onDeleteItem }) {
+function Item({ item, onDeleteItem,onToggleItems }) {
   return (
-    <li className='flex gap-4'>
+    <li className='flex items-center justify-center gap-2'>
+      <input value={item.packed}  type='checkbox' onChange={() => onToggleItems(item.id) }  className='w-6 h-6  ' />
       <span className='text-[22px]' style={item.packed ? { textDecorationLine: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
