@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: true },
-  { id: 2, description: "Sock", quantity: 12, packed: true },
-  { id: 3, description: "Charger", quantity: 1, packed: true },
-]
+// const initialItems = [
+//   { id: 1, description: "Passports", quantity: 2, packed: true },
+//   { id: 2, description: "Sock", quantity: 12, packed: true },
+//   { id: 3, description: "Charger", quantity: 1, packed: true },
+// ]
 
 export default function App() {
-  const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState([]);
 
   function handleAddItems(item) {
     setItems((items) => [...items, item]);
@@ -18,8 +18,8 @@ export default function App() {
     setItems((items) => items.filter((item) => item.id !== id));
   }
 
-  function handleToggleItem(id){
-    setItems(items => items.map(item => item.id === id ? { ...item, packed: ! item.packed} : item ) )
+  function handleToggleItem(id) {
+    setItems(items => items.map(item => item.id === id ? { ...item, packed: !item.packed } : item))
   }
 
 
@@ -27,7 +27,7 @@ export default function App() {
     <div className='flex items-center justify-center flex-col '>
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItems={handleToggleItem } />
+      <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItems={handleToggleItem} />
       <Stats />
     </div>
   );
@@ -71,7 +71,7 @@ function Form({ onAddItems }) {
   )
 }
 
-function PackingList({ items, onDeleteItem,onToggleItems }) {
+function PackingList({ items, onDeleteItem, onToggleItems }) {
   return (
     <div className='bg-orange-400 w-full h-[500px] justify-center items-start  px- 8  flex '>
       <div className='flex w-full  '>
@@ -85,10 +85,10 @@ function PackingList({ items, onDeleteItem,onToggleItems }) {
   )
 }
 
-function Item({ item, onDeleteItem,onToggleItems }) {
+function Item({ item, onDeleteItem, onToggleItems }) {
   return (
     <li className='flex items-center justify-center gap-2'>
-      <input value={item.packed}  type='checkbox' onChange={() => onToggleItems(item.id) }  className='w-6 h-6  ' />
+      <input value={item.packed} type='checkbox' onChange={() => onToggleItems(item.id)} className='w-6 h-6  ' />
       <span className='text-[22px]' style={item.packed ? { textDecorationLine: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
@@ -106,9 +106,3 @@ function Stats() {
     </footer>
   )
 }
-
-
-
-// 
-// onDeleteItem = {onDeleteItem} 
-// onDeleteItem={handleDeleteItem}
