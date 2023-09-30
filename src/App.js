@@ -28,7 +28,7 @@ export default function App() {
       <Logo />
       <Form onAddItems={handleAddItems} />
       <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItems={handleToggleItem} />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
@@ -73,7 +73,7 @@ function Form({ onAddItems }) {
 
 function PackingList({ items, onDeleteItem, onToggleItems }) {
   return (
-    <div className='bg-orange-400 w-full h-[500px] justify-center items-start  px- 8  flex '>
+    <div className='bg-orange-400 w-full h-[480px] justify-center items-start  px- 8  flex '>
       <div className='flex w-full  '>
         <ul className='text-[30px] flex-row gap-10 flex  flex-wrap items-center' >
           {items.map((item) => (
@@ -97,11 +97,13 @@ function Item({ item, onDeleteItem, onToggleItems }) {
   )
 }
 
-function Stats() {
+function Stats({items}) {
+const numItems = items.length;
+
   return (
     <footer className='bg-green-300 w-full flex items-center justify-center '>
       <em>
-        <h1 className='text-red-700 text-[20px]' >💼 You have X items on your list, and you already picked X (X%)</h1>
+        <h1 className='text-red-700 text-[20px]' >💼 You have {numItems} items on your list, and you already picked X (X%)</h1>
       </em>
     </footer>
   )
