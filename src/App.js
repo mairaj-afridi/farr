@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
+import Logo from './Logo';
+import Form from './Form';
+import { PackingList } from './PackingList';
 
 // const initialItems = [
 //   { id: 1, description: "Passports", quantity: 2, packed: true },
@@ -30,7 +33,7 @@ export default function App() {
 
   return (
     <div className='flex items-center justify-center flex-col '>
-      <Logo />
+      <Logo/>
       <Form onAddItems={handleAddItems} />
       <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItems={handleToggleItem} onClearList={handleClearList} />
       <Stats items={items} />
@@ -38,74 +41,9 @@ export default function App() {
   );
 }
 
-function Logo() {
-  return (
-    <div className='bg-orange-300 w-full flex items-center justify-center'>
-      <h1 className='text-red-700 text-[60px] uppercase font-extrabold  ' >🏝 Far Away 🧳 </h1>
-    </div>
-  )
-}
 
-function Form({ onAddItems }) {
-  const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState(1);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!description) return;
-
-    const newItem = { description, quantity, packed: false, id: Date.now() };
-    onAddItems(newItem);
-
-    setDescription("");
-    setQuantity(1);
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className='bg-green-900 w-full h-20 gap-4 flex items-center justify-center'>
-      <h1 className='text-white text-[20px]' >What do you need for your 😍 trip? </h1>
-      <select className='rounded-xl p-3 px-2' value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
-        {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
-          <option value={num} key={num}>{num}</option>
-        ))}
-      </select>
-      <input className='rounded-xl p-3' type='text' placeholder='Item...' value={description} onChange={(e) => setDescription(e.target.value)} />
-      <button className='border-spacing-6 border rounded-xl p-3 text-white bg-green-500 '>add</button>
-    </form>
-  )
-}
-
-function PackingList({ items, onDeleteItem, onToggleItems,onClearList }) {
- const [sortBy, setSortBy] = useState("input"); 
-
-// let sortedItems;
-  
-// if(sortBy === 'input')setSortBy=items;
-// if()
- 
-  return (
-    <div className='bg-orange-400 w-full gap-8 min-h-[450px] h-full justify-start items-center relative flex-col   px-8  flex '>
-      <div className='flex w-full  '>
-        <ul className='text-[30px] flex-row gap-10 flex  flex-wrap items-center' >
-          {items.map((item) => (
-            <Item item={item} key={item.id} onDeleteItem={onDeleteItem} onToggleItems={onToggleItems} onClearList={onClearList} />
-          ))}
-        </ul>
-      </div>
-        <div className='flex gap-6 absolute  bottom-10' >
-          <select className='uppercase  rounded-lg border p-2 ' value={sortBy} onChange={(e)=> setSortBy(e.target.value) }>
-          <option value="input">Sorry by input order </option>
-          <option value="description">Sorry by description</option>
-          <option value="packed">Sorry by packed status</option>
-          </select>
-          <button onClick={onClearList}  className='border uppercase  bg-white p-2 rounded-md '>clear list</button>
-        </div>
-    </div>
-  )
-}
-
-function Item({ item, onDeleteItem, onToggleItems }) {
+export function Item({ item, onDeleteItem, onToggleItems }) {
   return (
     <li className='flex items-center justify-center gap-2'>
       <input value={item.packed} type='checkbox' onChange={() => onToggleItems(item.id)} className='w-6 h-6  ' />
