@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import './App.css';
-import Logo from './Logo';
-import Form from './Form';
-import { PackingList } from './PackingList';
-
-// const initialItems = [
-//   { id: 1, description: "Passports", quantity: 2, packed: true },
-//   { id: 2, description: "Sock", quantity: 12, packed: true },
-//   { id: 3, description: "Charger", quantity: 1, packed: true },
-// ]
+import Logo from './components/Logo';
+import Form from './components/Form';
+import PackingList  from './components/PackingList';
+import { Stats } from './components/Stats';
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -43,35 +37,4 @@ export default function App() {
 
 
 
-export function Item({ item, onDeleteItem, onToggleItems }) {
-  return (
-    <li className='flex items-center justify-center gap-2'>
-      <input value={item.packed} type='checkbox' onChange={() => onToggleItems(item.id)} className='w-6 h-6  ' />
-      <span className='text-[22px]' style={item.packed ? { textDecorationLine: "line-through" } : {}}>
-        {item.quantity} {item.description}
-      </span>
-      <button className='text-[15px]' onClick={() => onDeleteItem(item.id)}>❌</button>
-    </li>
-  )
-}
 
-function Stats({items}) {
-if(!items.length) return (
-  <p className='bg-green-300 py-5 w-full flex items-center justify-center' >
-    <em className='text-white text-[26px]'>Start adding some Items to your packing list 🚀</em>
-    </p>
-)
-
-const numItems = items.length;
-const numPaked = items.filter((item) => item.packed).length;
-const percentage = Math.round((numPaked/numItems) * 100);
-
-  return (
-    <footer className='bg-green-300 py-5 w-full flex items-center justify-center '>
-      <em className='text-white text-[26px]'>{percentage === 100 ? "You got everything! Ready to go ✈️" : 
-       `💼 You have ${numItems}  items on your list, and you already picked ${numPaked} (${percentage}X%)`
-      }
-      </em>
-    </footer>
-  )
-}
