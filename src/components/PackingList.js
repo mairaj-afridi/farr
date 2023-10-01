@@ -16,7 +16,7 @@ export default function PackingList({ items, onDeleteItem, onToggleItems, onClea
           ))}
         </ul>
       </div>
-      <div className='flex gap-6 absolute  bottom-10'>
+      <div className='flex gap-6 md:flex-row flex-col absolute  bottom-10'>
         <select className='uppercase  rounded-lg border p-2 ' value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option value="input">Sorry by input order </option>
           <option value="description">Sorry by description</option>
