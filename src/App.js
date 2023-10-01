@@ -12,22 +12,27 @@ export default function App() {
 
   function handleAddItems(item) {
     setItems((items) => [...items, item]);
-  }
+  };
 
   function handleDeleteItem(id) {
     setItems((items) => items.filter((item) => item.id !== id));
-  }
+  };
 
   function handleToggleItem(id) {
     setItems(items => items.map(item => item.id === id ? { ...item, packed: !item.packed } : item))
+  };
+  
+  // function to clear the list
+  function handleClearList(){
+    const confirmed = window.confirm("are you showr to delete all itemsjjjjjj")
+    if (confirmed) setItems([]);
   }
-
 
   return (
     <div className='flex items-center justify-center flex-col '>
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItems={handleToggleItem} />
+      <PackingList items={items} onDeleteItem={handleDeleteItem} onToggleItems={handleToggleItem} onClearList={handleClearList} />
       <Stats items={items} />
     </div>
   );
@@ -71,22 +76,30 @@ function Form({ onAddItems }) {
   )
 }
 
-function PackingList({ items, onDeleteItem, onToggleItems }) {
+function PackingList({ items, onDeleteItem, onToggleItems,onClearList }) {
+ const [sortBy, setSortBy] = useState("input"); 
+
+// let sortedItems;
+  
+// if(sortBy === 'input')setSortBy=items;
+// if()
+ 
   return (
-    <div className='bg-orange-400 w-full gap-60 h-[480px] justify-start items-center flex-col   px-8  flex '>
+    <div className='bg-orange-400 w-full gap-8 min-h-[450px] h-full justify-start items-center relative flex-col   px-8  flex '>
       <div className='flex w-full  '>
         <ul className='text-[30px] flex-row gap-10 flex  flex-wrap items-center' >
           {items.map((item) => (
-            <Item item={item} key={item.id} onDeleteItem={onDeleteItem} onToggleItems={onToggleItems} />
+            <Item item={item} key={item.id} onDeleteItem={onDeleteItem} onToggleItems={onToggleItems} onClearList={onClearList} />
           ))}
         </ul>
       </div>
-        <div>
-          <select>
+        <div className='flex gap-6 absolute  bottom-10' >
+          <select className='uppercase  rounded-lg border p-2 ' value={sortBy} onChange={(e)=> setSortBy(e.target.value) }>
           <option value="input">Sorry by input order </option>
-          <option value="input">Sorry by description</option>
-          <option value="input">Sorry by packed status</option>
+          <option value="description">Sorry by description</option>
+          <option value="packed">Sorry by packed status</option>
           </select>
+          <button onClick={onClearList}  className='border uppercase  bg-white p-2 rounded-md '>clear list</button>
         </div>
     </div>
   )
