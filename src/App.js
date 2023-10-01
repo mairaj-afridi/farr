@@ -21,7 +21,7 @@ export default function App() {
   
   // function to clear the list
   function handleClearList(){
-    const confirmed = window.confirm("are you showr to delete all itemsjjjjjj")
+    const confirmed = window.confirm("Are you showr to delete all items.")
     if (confirmed) setItems([]);
   }
 
